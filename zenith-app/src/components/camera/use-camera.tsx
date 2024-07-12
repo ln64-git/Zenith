@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-const useCamera = (): React.RefObject<HTMLVideoElement> => {
+const useCamera = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -10,12 +10,8 @@ const useCamera = (): React.RefObject<HTMLVideoElement> => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
-        console.log("stream: ", stream);
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          videoRef.current.play();
-        } else {
-          console.log("videoRef.current is null");
         }
       } catch (err) {
         console.error("Error accessing camera: ", err);

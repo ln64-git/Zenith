@@ -1,11 +1,11 @@
 "use client";
-import DisplayGrid from "@/components/display-grid";
+import VideoPlayer from "@/components/video-player";
 import KeyboardShortcuts from "@/utils/keyboard-shortcuts";
 
 export default function Home() {
   return (
-    <div className="relative flex h-screen items-center justify-center overflow-hidden">
-      <DisplayGrid />
+    <div className="h-screen">
+      <VideoPlayer />
       <KeyboardShortcuts />
     </div>
   );

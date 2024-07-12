@@ -1,4 +1,4 @@
-"use client";
+// display-store.ts
 import { create } from "zustand";
 import { UserDisplay } from "@/types/types";
 
