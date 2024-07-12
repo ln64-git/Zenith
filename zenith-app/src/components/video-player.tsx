@@ -18,21 +18,34 @@ export default function VideoPlayer() {
     const rows = Math.ceil(numVideos / columns);
 
     return (
-      <div className="absolute flex h-full w-full flex-wrap">
-        {videosArray.map((video: UserDisplay, index: number) => (
-          <div
-            key={index}
-            className="relative"
-            style={{
-              width: `${100 / columns}%`,
-              height: `${100 / rows}%`,
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            <Camera />
-          </div>
-        ))}
+      <div className="absolute flex flex-col h-full w-full">
+        {Array.from({ length: rows }).map((_, rowIndex) => {
+          const start = rowIndex * columns;
+          const rowItems = videosArray.slice(start, start + columns);
+          return (
+            <div
+              key={rowIndex}
+              className="flex w-full justify-center"
+              style={{
+                height: `${100 / rows}%`,
+              }}
+            >
+              {rowItems.map((video: UserDisplay, index: number) => (
+                <div
+                  key={index}
+                  className="relative flex justify-center items-center"
+                  style={{
+                    width: `${100 / columns}%`,
+                    margin: 0,
+                    padding: 0,
+                  }}
+                >
+                  <Camera />
+                </div>
+              ))}
+            </div>
+          );
+        })}
       </div>
     );
   };
