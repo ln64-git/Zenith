@@ -1,16 +1,12 @@
-"use client"
-import useCamera from "@/components/useCamera";
+"use client";
+import DisplayGrid from "@/components/display-grid";
+import KeyboardShortcuts from "@/utils/keyboard-shortcuts";
 
 export default function Home() {
-  const videoRef = useCamera();
-
   return (
-    <main className="w-full h-screen">
-      <video
-        ref={videoRef}
-        autoPlay
-        className="w-full h-full"
-      ></video>
-    </main>
+    <div className="relative flex h-screen items-center justify-center overflow-hidden">
+      <DisplayGrid />
+      <KeyboardShortcuts />
+    </div>
   );
 }
