@@ -33,7 +33,14 @@ const Camera = () => {
     };
   }, []);
 
-  return <video ref={videoRef} className="h-full w-full " autoPlay muted />;
+  return (
+    <video
+      ref={videoRef}
+      className="h-full w-full object-cover m-0 p-0"
+      autoPlay
+      muted
+    />
+  );
 };
 
 export default Camera;

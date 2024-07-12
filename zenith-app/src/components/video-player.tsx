@@ -22,8 +22,13 @@ export default function VideoPlayer() {
         {videosArray.map((video: UserDisplay, index: number) => (
           <div
             key={index}
-            className="relative flex-grow"
-            style={{ width: `${100 / columns}%`, height: `${100 / rows}%` }}
+            className="relative"
+            style={{
+              width: `${100 / columns}%`,
+              height: `${100 / rows}%`,
+              margin: 0,
+              padding: 0,
+            }}
           >
             <Camera />
           </div>
@@ -33,7 +38,7 @@ export default function VideoPlayer() {
   };
 
   return (
-    <div className="absolute z-10 h-full w-full">
+    <div className="absolute z-10 h-full w-full m-0 p-0">
       {splitScreen(localVideos)}
     </div>
   );
