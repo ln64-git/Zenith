@@ -6,11 +6,16 @@ import Camera from "./camera/camera";
 
 export default function VideoPlayer() {
   const [localVideos, setLocalVideos] = useState<UserDisplay[]>([]);
+  const [movement, setMovement] = useState<number>(0);
   const displayStore = useDisplayStore();
 
   useEffect(() => {
     setLocalVideos(displayStore.userDisplayArray);
   }, [displayStore.userDisplayArray]);
+
+  const handleMovement = (newMovement: number) => {
+    setMovement(newMovement);
+  };
 
   const splitScreen = (videosArray: UserDisplay[]) => {
     const numVideos = videosArray.length;
@@ -40,7 +45,7 @@ export default function VideoPlayer() {
                     padding: 0,
                   }}
                 >
-                  <Camera />
+                  <Camera onMovement={handleMovement} />
                 </div>
               ))}
             </div>
@@ -52,6 +57,7 @@ export default function VideoPlayer() {
 
   return (
     <div className="absolute z-10 h-full w-full m-0 p-0">
+      <div>Movement: {movement}</div>
       {splitScreen(localVideos)}
     </div>
   );
