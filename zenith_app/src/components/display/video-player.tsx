@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDisplayStore } from "../utils/display-store";
+import { useDisplayStore } from "../../utils/display-store";
 import { UserDisplay } from "@/types/types";
-import Camera from "./camera/camera";
+import Camera from "../camera/camera";
 
 export default function VideoPlayer() {
   const [localVideos, setLocalVideos] = useState<UserDisplay[]>([]);

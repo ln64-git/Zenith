@@ -6,7 +6,6 @@ export const drawRectangle = (
   const start = prediction.topLeft as [number, number];
   const end = prediction.bottomRight as [number, number];
   const size = [end[0] - start[0], end[1] - start[1]];
-
   ctx.beginPath();
   ctx.strokeStyle = "red";
   ctx.lineWidth = 2;

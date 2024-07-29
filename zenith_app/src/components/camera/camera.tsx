@@ -29,11 +29,15 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
         });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          // Ensure the canvas is the same size as the video
           videoRef.current.onloadedmetadata = () => {
             if (canvasRef.current && videoRef.current) {
-              canvasRef.current.width = videoRef.current.videoWidth;
-              canvasRef.current.height = videoRef.current.videoHeight;
+              const videoWidth = videoRef.current.videoWidth;
+              const videoHeight = videoRef.current.videoHeight;
+              const devicePixelRatio = window.devicePixelRatio || 1;
+              canvasRef.current.width = videoWidth * devicePixelRatio;
+              canvasRef.current.height = videoHeight * devicePixelRatio;
+              canvasRef.current.style.width = `${videoWidth}px`;
+              canvasRef.current.style.height = `${videoHeight}px`;
             }
           };
         }
