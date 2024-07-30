@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tensorflow-models/blazeface": "^0.1.0",
+    "@tensorflow-models/facemesh": "^0.0.5",
     "@tensorflow/tfjs": "^4.20.0",
     "framer-motion": "^11.3.19",
     "next": "14.2.5",

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Display from "@/components/display/display";
 import KeyboardShortcuts from "@/utils/keyboard-shortcuts";
 import AnimatedBackground from "@/components/ui/animate-background";

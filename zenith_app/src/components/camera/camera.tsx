@@ -1,21 +1,21 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import * as blazeface from "@tensorflow-models/blazeface";
+import * as facemesh from "@tensorflow-models/facemesh";
 import "@tensorflow/tfjs";
-import { drawRectangle } from "@/utils/draw";
+import { drawMesh } from "@/utils/drawMesh";
 
 const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [model, setModel] = useState<blazeface.BlazeFaceModel | null>(null);
+  const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
 
   useEffect(() => {
     const loadModel = async () => {
       try {
-        const loadedModel = await blazeface.load();
+        const loadedModel = await facemesh.load();
         setModel(loadedModel);
       } catch (error) {
-        console.error("Error loading BlazeFace model", error);
+        console.error("Error loading FaceMesh model", error);
       }
     };
 
@@ -67,8 +67,9 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   useEffect(() => {
     const detectFace = async () => {
       if (videoRef.current && model) {
-        const predictions = await model.estimateFaces(videoRef.current, false);
-        console.log("Predictions: ", predictions);
+        const predictions = (await model.estimateFaces(
+          videoRef.current
+        )) as facemesh.AnnotatedPrediction[];
 
         if (predictions.length > 0 && canvasRef.current) {
           const ctx = canvasRef.current.getContext("2d");
@@ -76,19 +77,20 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
             const videoWidth = videoRef.current.videoWidth;
             const videoHeight = videoRef.current.videoHeight;
             ctx.clearRect(0, 0, videoWidth, videoHeight);
-            drawRectangle(ctx, predictions[0], videoWidth, videoHeight);
+
+            const scaledMesh = predictions[0].scaledMesh;
+            if (Array.isArray(scaledMesh)) {
+              drawMesh(ctx, scaledMesh);
+            }
           }
         }
 
         // Track head movement
         if (predictions.length > 0) {
-          const landmarks = predictions[0].landmarks;
-          if (Array.isArray(landmarks)) {
-            const nose = landmarks[2] as number[];
+          const scaledMesh = predictions[0].scaledMesh;
+          if (Array.isArray(scaledMesh)) {
+            const nose = scaledMesh[168]; // The 168th point is usually the tip of the nose
             onMovement(nose[0]); // Call the onMovement callback with the nose x position
-          } else if (landmarks instanceof Float32Array) {
-            const nose = [landmarks[6], landmarks[7]]; // Adjusted for the correct index
-            onMovement(nose[0]);
           }
         }
       }
