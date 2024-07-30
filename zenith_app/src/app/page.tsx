@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Display from "@/components/display/display";
 import KeyboardShortcuts from "@/utils/keyboard-shortcuts";
-import AnimatedBackground from "@/components/animate-background";
+import AnimatedBackground from "@/components/ui/animate-background";
 import { colors } from "@/utils/colorUtils"; // Adjusted import
-import { useDisplayStore } from "@/utils/display-store";
-import { UserDisplay } from "@/types/types";
 
 export default function Home() {
   const randomColor = colors[Math.floor(Math.random() * colors.length)];

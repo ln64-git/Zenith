@@ -9,11 +9,9 @@ export const colorsOld = [
 // new color template for colors that represent light
 // I need 6 numbers
 export const colors = [
-  "#dcdc95", // Light Goldenrod Yellow
-  "#dcb695", // Papaya Whip
-  "#e99d8a", // Peach Puff
-  "#cba184", // Seashell
-  "#80b9d3",
+  "#5c5c82", 
+  "#4c7d6f",
+  "#568397",
 ];
 
 const hexToHsl = (hex: string) => {
