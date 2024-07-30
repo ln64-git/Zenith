@@ -1,22 +1,22 @@
-// AnimatedGrayDiv.tsx
+// animated-background.tsx
 "use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { generateRelativeColors } from "@/utils/colorUtils"; // Adjust the path as necessary
+import { useDisplayStore } from "@/utils/display-store";
+import { generateRelativeColors } from "@/utils/colorUtils";
 
-interface AnimatedGrayDivProps {
-  initialColor: string;
+interface AnimatedBackgroundProps {
   className?: string;
   children?: React.ReactNode;
 }
 
-const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
-  initialColor,
+const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   className,
   children,
 }) => {
+  const store = useDisplayStore();
   const controls = useAnimation();
-  const colors = generateRelativeColors(initialColor);
+  const colors = generateRelativeColors(store.userColor);
 
   useEffect(() => {
     controls.start({
@@ -35,8 +35,8 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
       className=" rounded-lg relative"
       animate={controls}
       initial={{
-        backgroundColor: initialColor,
-        boxShadow: `0 1px 32px 0 ${initialColor}`,
+        backgroundColor: store.userColor,
+        boxShadow: `0 1px 32px 0 ${store.userColor}`,
       }}
       style={{
         backdropFilter: "blur(10px)",
@@ -46,7 +46,7 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
       <motion.div
         animate={controls}
         className={className}
-        initial={{ backgroundColor: initialColor }}
+        initial={{ backgroundColor: store.userColor }}
       >
         {children}
       </motion.div>
@@ -54,4 +54,4 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
   );
 };
 
-export default AnimatedGrayDiv;
+export default AnimatedBackground;
