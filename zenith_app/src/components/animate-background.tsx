@@ -20,6 +20,7 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
   useEffect(() => {
     controls.start({
       backgroundColor: colors,
+      boxShadow: colors.map((color) => `0 1px 32px 0 ${color}`),
       transition: {
         repeat: Infinity,
         repeatType: "mirror",
@@ -31,11 +32,24 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
 
   return (
     <motion.div
+      className="  h-full aspect-[4/3] rounded-md relative"
       animate={controls}
-      className={className}
-      initial={{ backgroundColor: initialColor }}
+      initial={{
+        backgroundColor: initialColor,
+        boxShadow: `0 1px 32px 0 ${initialColor}`,
+      }}
+      style={{
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+      }}
     >
-      {children}
+      <motion.div
+        animate={controls}
+        className={className}
+        initial={{ backgroundColor: initialColor }}
+      >
+        {children}
+      </motion.div>
     </motion.div>
   );
 };

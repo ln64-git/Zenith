@@ -88,13 +88,8 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   }, [model, onMovement]);
 
   return (
-    <div className="relative h-full w-full">
-      <video
-        ref={videoRef}
-        className="h-full w-full object-cover absolute top-0 left-0"
-        autoPlay
-        muted
-      />
+    <div className="relative flex justify-center items-center">
+      <video ref={videoRef} className="max-w-full max-h-full rounded-md" autoPlay muted />
       <canvas ref={canvasRef} className="absolute top-0 left-0" />
     </div>
   );

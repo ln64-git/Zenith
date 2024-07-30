@@ -8,8 +8,6 @@ export default function Display() {
   const [localVideos, setLocalVideos] = useState<UserDisplay[]>([]);
   const [movement, setMovement] = useState<number>(0);
   const displayStore = useDisplayStore();
-  if (localVideos != null) {
-  }
 
   useEffect(() => {
     setLocalVideos(displayStore.userDisplayArray);
@@ -21,9 +19,9 @@ export default function Display() {
 
   return (
     <>
-      <div className="absolute z-20 text-black">Movement: {movement}</div>
+      <div className="absolute px-1 z-20 text-black">Movement: {movement}</div>
       {localVideos.length > 0 && (
-        <div className="aspect-video  flex justify-center items-center">
+        <div className=" h-full flex justify-center  items-center">
           <Camera onMovement={handleMovement} />
         </div>
       )}
