@@ -32,7 +32,7 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
 
   return (
     <motion.div
-      className="  h-full aspect-[4/3] rounded-md relative"
+      className=" rounded-md relative"
       animate={controls}
       initial={{
         backgroundColor: initialColor,

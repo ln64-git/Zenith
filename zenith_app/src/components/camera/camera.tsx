@@ -33,9 +33,8 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
             if (canvasRef.current && videoRef.current) {
               const videoWidth = videoRef.current.videoWidth;
               const videoHeight = videoRef.current.videoHeight;
-              const devicePixelRatio = window.devicePixelRatio || 1;
-              canvasRef.current.width = videoWidth * devicePixelRatio;
-              canvasRef.current.height = videoHeight * devicePixelRatio;
+              canvasRef.current.width = videoWidth;
+              canvasRef.current.height = videoHeight;
               canvasRef.current.style.width = `${videoWidth}px`;
               canvasRef.current.style.height = `${videoHeight}px`;
             }
@@ -47,6 +46,23 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
     };
 
     getCameraStream();
+
+    const handleResize = () => {
+      if (videoRef.current && canvasRef.current) {
+        const videoWidth = videoRef.current.videoWidth;
+        const videoHeight = videoRef.current.videoHeight;
+        canvasRef.current.width = videoWidth;
+        canvasRef.current.height = videoHeight;
+        canvasRef.current.style.width = `${videoWidth}px`;
+        canvasRef.current.style.height = `${videoHeight}px`;
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -58,13 +74,10 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
         if (predictions.length > 0 && canvasRef.current) {
           const ctx = canvasRef.current.getContext("2d");
           if (ctx) {
-            ctx.clearRect(
-              0,
-              0,
-              canvasRef.current.width,
-              canvasRef.current.height
-            );
-            drawRectangle(ctx, predictions[0]);
+            const videoWidth = videoRef.current.videoWidth;
+            const videoHeight = videoRef.current.videoHeight;
+            ctx.clearRect(0, 0, videoWidth, videoHeight);
+            drawRectangle(ctx, predictions[0], videoWidth, videoHeight);
           }
         }
 
@@ -89,7 +102,12 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
 
   return (
     <div className="relative flex justify-center items-center">
-      <video ref={videoRef} className="max-w-full max-h-full rounded-md" autoPlay muted />
+      <video
+        ref={videoRef}
+        className="max-w-full max-h-full rounded-md"
+        autoPlay
+        muted
+      />
       <canvas ref={canvasRef} className="absolute top-0 left-0" />
     </div>
   );

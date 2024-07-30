@@ -1,7 +1,8 @@
-// utils/draw.ts
 export const drawRectangle = (
   ctx: CanvasRenderingContext2D,
-  prediction: any
+  prediction: any,
+  videoWidth: number,
+  videoHeight: number
 ) => {
   const start = prediction.topLeft as [number, number];
   const end = prediction.bottomRight as [number, number];
