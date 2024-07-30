@@ -3,11 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 import * as facemesh from "@tensorflow-models/facemesh";
 import "@tensorflow/tfjs";
 import { drawMesh } from "@/utils/drawMesh";
+import { useDisplayStore } from "@/utils/display-store";
 
 const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
+  const store = useDisplayStore();
+  const color = store.userColor;
 
   useEffect(() => {
     const loadModel = async () => {
@@ -80,7 +83,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
 
             const scaledMesh = predictions[0].scaledMesh;
             if (Array.isArray(scaledMesh)) {
-              drawMesh(ctx, scaledMesh);
+              drawMesh(ctx, scaledMesh, color);
             }
           }
         }

@@ -1,11 +1,13 @@
 import { Coords3D } from "@tensorflow-models/facemesh/dist/util";
+import { useDisplayStore } from "./display-store";
 
 export const drawMesh = (
   ctx: CanvasRenderingContext2D,
-  keypoints: Coords3D
+  keypoints: Coords3D,
+  color: string
 ) => {
   ctx.beginPath();
-  ctx.strokeStyle = "yellow";
+  ctx.strokeStyle = color;
   ctx.lineWidth = 0.5;
 
   for (let i = 0; i < keypoints.length; i++) {

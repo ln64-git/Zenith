@@ -3,12 +3,19 @@ import { create } from "zustand";
 import { UserDisplay } from "@/types/types";
 
 export type UserGridStore = {
+  userColor: string;
+  setUserColor: (color: string) => void;
   userDisplayArray: Array<UserDisplay>;
   addDisplay: (video: UserDisplay) => void;
   setUserDisplayArray: (displayArray: Array<UserDisplay>) => void;
 };
 
 export const useDisplayStore = create<UserGridStore>((set, get) => ({
+  userColor: "",
+  setUserColor: (color) => {
+    const state = get();
+    state.userColor = color;
+  },
   userDisplayArray: [],
   addDisplay: (video) => {
     const state = get();
