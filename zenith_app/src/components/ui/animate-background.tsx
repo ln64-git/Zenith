@@ -1,3 +1,4 @@
+// AnimatedGrayDiv.tsx
 "use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";

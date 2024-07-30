@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useDisplayStore } from "@/utils/display-store";
-import { addUser } from "./users";
+import { addUserDisplay } from "./user-display";
 
 export function KeyboardShortcuts() {
   const displayStore = useDisplayStore();
@@ -9,8 +9,12 @@ export function KeyboardShortcuts() {
   useEffect(() => {
     const handleKeyboardShortcut = async (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "x") {
-        e.preventDefault();
-        await addUser(displayStore.addDisplay);
+        if (displayStore.userDisplayArray) {
+          e.preventDefault();
+          await addUserDisplay(displayStore.addDisplay);
+        } else {
+          displayStore.setUserDisplayArray([]);
+        }
       }
     };
 

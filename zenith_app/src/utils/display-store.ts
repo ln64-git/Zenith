@@ -4,8 +4,8 @@ import { UserDisplay } from "@/types/types";
 
 export type UserGridStore = {
   userColor: string;
-  setUserColor: (color: string) => void;
   userDisplayArray: Array<UserDisplay>;
+  setUserColor: (color: string) => void;
   addDisplay: (video: UserDisplay) => void;
   setUserDisplayArray: (displayArray: Array<UserDisplay>) => void;
 };

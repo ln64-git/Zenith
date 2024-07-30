@@ -1,7 +1,7 @@
 import React from "react";
 import { User, UserDisplay, Video } from "@/types/types";
 
-export const addUser = async (addDisplay: (video: UserDisplay) => void) => {
+export const addUserDisplay = async (addDisplay: (video: UserDisplay) => void) => {
   const videoRef = await getCameraRef();
   if (videoRef) {
     const userDisplay: UserDisplay = {

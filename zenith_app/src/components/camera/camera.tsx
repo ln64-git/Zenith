@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as facemesh from "@tensorflow-models/facemesh";
 import "@tensorflow/tfjs";
-import { drawMesh } from "@/utils/drawMesh";
+import { drawMesh } from "@/utils/draw-facemesh";
 import { useDisplayStore } from "@/utils/display-store";
 
 const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
@@ -11,6 +11,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
   const store = useDisplayStore();
   const color = store.userColor;
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadModel = async () => {
@@ -44,6 +45,9 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
         }
       } catch (err) {
         console.error("Error accessing camera: ", err);
+        setError(
+          "Failed to access camera. Please ensure the camera is not being used by another application and that the browser has permission to access it."
+        );
       }
     };
 
@@ -106,6 +110,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
 
   return (
     <div className="relative flex justify-center items-center">
+      {error && <div className="absolute text-red-500">{error}</div>}
       <video
         ref={videoRef}
         className="max-w-full max-h-full m-1 rounded-lg"
