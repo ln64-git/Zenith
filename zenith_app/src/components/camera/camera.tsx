@@ -14,7 +14,6 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
       try {
         const loadedModel = await blazeface.load();
         setModel(loadedModel);
-        console.log("BlazeFace model loaded");
       } catch (error) {
         console.error("Error loading BlazeFace model", error);
       }
@@ -104,7 +103,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
     <div className="relative flex justify-center items-center">
       <video
         ref={videoRef}
-        className="max-w-full max-h-full rounded-md"
+        className="max-w-full max-h-full m-1 rounded-lg"
         autoPlay
         muted
       />

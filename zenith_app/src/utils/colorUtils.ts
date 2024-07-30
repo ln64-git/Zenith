@@ -1,9 +1,19 @@
-export const colors = [
+export const colorsOld = [
   "#713c3c", // Dark Mode Pastel Pink
   "#37475a", // Dark Mode Pastel Blue
   "#325838", // Dark Mode Pastel Green
   "#32584f", // Dark Mode Pastel Green
   "#493258", // Dark Mode Pastel Green
+];
+
+// new color template for colors that represent light
+// I need 6 numbers
+export const colors = [
+  "#dcdc95", // Light Goldenrod Yellow
+  "#dcb695", // Papaya Whip
+  "#e99d8a", // Peach Puff
+  "#cba184", // Seashell
+  "#80b9d3",
 ];
 
 const hexToHsl = (hex: string) => {
@@ -74,7 +84,6 @@ const hslToHex = (h: number, s: number, l: number) => {
     .padStart(2, "0")
     .toUpperCase()}${Math.round(b * 255)
     .toString(16)
-    .padStart(2, "0")
     .toUpperCase()}`;
 };
 

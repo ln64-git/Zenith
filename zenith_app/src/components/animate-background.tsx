@@ -20,19 +20,18 @@ const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
   useEffect(() => {
     controls.start({
       backgroundColor: colors,
-      boxShadow: colors.map((color) => `0 1px 32px 0 ${color}`),
+      boxShadow: colors.map((color) => `0 1px 15px 0 ${color}`), // Reduced intensity
       transition: {
         repeat: Infinity,
         repeatType: "mirror",
-        duration: 10,
-        ease: "easeInOut",
+        duration: 20,
       },
     });
   }, [controls, colors]);
 
   return (
     <motion.div
-      className=" rounded-md relative"
+      className=" rounded-lg relative"
       animate={controls}
       initial={{
         backgroundColor: initialColor,

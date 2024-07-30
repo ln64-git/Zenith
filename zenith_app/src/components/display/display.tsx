@@ -21,9 +21,7 @@ export default function Display() {
     <>
       {localVideos.length > 0 && (
         <div>
-          <div className="absolute px-1 z-20 text-black">
-            Movement: {movement}
-          </div>
+          <div className="absolute p-2 px-4 z-20 text-black">{movement}</div>
           <div className=" h-full flex justify-center items-center">
             <Camera onMovement={handleMovement} />
           </div>
