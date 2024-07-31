@@ -1,27 +1,26 @@
-// animated-background.tsx
 "use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { generateRelativeColors } from "@/utils/colorUtils";
+import { generateRelativeColors } from "@/utils/colorUtils"; // Adjust the path as necessary
 
-interface AnimatedBackgroundProps {
+interface AnimatedGrayDivProps {
+  initialColor: string;
   className?: string;
   children?: React.ReactNode;
-  color: string;
 }
 
-const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
+const AnimatedGrayDiv: React.FC<AnimatedGrayDivProps> = ({
+  initialColor,
   className,
   children,
-  color,
 }) => {
-  const colors = generateRelativeColors(color);
   const controls = useAnimation();
+  const colors = generateRelativeColors(initialColor);
 
   useEffect(() => {
     controls.start({
       backgroundColor: colors,
-      boxShadow: colors.map((color) => `0 1px 15px 0 ${color}`),
+      boxShadow: colors.map((color) => `0 1px 15px 0 ${color}`), // Reduced intensity
       transition: {
         repeat: Infinity,
         repeatType: "mirror",
@@ -32,20 +31,26 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
 
   return (
     <motion.div
-      className={`rounded-lg relative ${className}`}
+      className=" rounded-lg relative"
       animate={controls}
       initial={{
-        backgroundColor: color,
-        boxShadow: `0 1px 32px 0 ${color}`,
+        backgroundColor: initialColor,
+        boxShadow: `0 1px 32px 0 ${initialColor}`,
       }}
       style={{
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
       }}
     >
-      {children}
+      <motion.div
+        animate={controls}
+        className={className}
+        initial={{ backgroundColor: initialColor }}
+      >
+        {children}
+      </motion.div>
     </motion.div>
   );
 };
 
-export default AnimatedBackground;
+export default AnimatedGrayDiv;

@@ -19,7 +19,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
         const loadedModel = await facemesh.load();
         setModel(loadedModel);
       } catch (error) {
-        console.error("Error loading FaceMesh model", error);
+        // console.error("Error loading FaceMesh model", error);
       }
     };
 
@@ -44,10 +44,10 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
           };
         }
       } catch (err) {
-        console.error("Error accessing camera: ", err);
-        setError(
-          "Failed to access camera. Please ensure the camera is not being used by another application and that the browser has permission to access it."
-        );
+        // console.error("Error accessing camera: ", err);
+        // setError(
+        //   "Failed to access camera. Please ensure the camera is not being used by another application and that the browser has permission to access it."
+        // );
       }
     };
 

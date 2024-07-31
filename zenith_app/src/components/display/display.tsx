@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDisplayStore } from "../../utils/display-store";
+import { useDisplayStore } from "@/utils/display-store";
 import { UserDisplay } from "@/types/types";
 import Camera from "../camera/camera";
 
@@ -21,10 +21,10 @@ export default function Display() {
     <>
       {localVideos.length > 0 && (
         <div>
-          {movement != 0 && (
+          {movement !== 0 && (
             <div className="absolute p-2 px-4 z-20 text-black">{movement}</div>
           )}
-          <div className=" h-full flex justify-center items-center">
+          <div className="h-full flex justify-center items-center">
             <Camera onMovement={handleMovement} />
           </div>
         </div>
