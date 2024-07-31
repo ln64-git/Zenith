@@ -103,7 +103,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
       }
     };
 
-    const interval = setInterval(detectFace, 100); // Detect every 100ms
+    const interval = setInterval(detectFace, 1); // Detect every 100ms
 
     return () => clearInterval(interval);
   }, [model, onMovement]);

@@ -25,7 +25,7 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       transition: {
         repeat: Infinity,
         repeatType: "mirror",
-        duration: 20,
+        duration: 5,
       },
     });
   }, [controls, colors]);
