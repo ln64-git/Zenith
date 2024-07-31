@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useDisplayStore } from "@/utils/display-store";
+import { useStore } from "@/lib/user-store";
 import { UserDisplay } from "@/types/types";
 import Camera from "../camera/camera";
 
 export default function Display() {
   const [localVideos, setLocalVideos] = useState<UserDisplay[]>([]);
   const [movement, setMovement] = useState<number>(0);
-  const displayStore = useDisplayStore();
+  const displayStore = useStore();
 
   useEffect(() => {
     setLocalVideos(displayStore.userDisplayArray);
@@ -32,3 +32,4 @@ export default function Display() {
     </>
   );
 }
+

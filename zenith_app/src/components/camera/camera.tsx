@@ -2,27 +2,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as facemesh from "@tensorflow-models/facemesh";
 import "@tensorflow/tfjs";
-import { drawMesh } from "@/utils/draw-facemesh";
-import { useDisplayStore } from "@/utils/display-store";
+import { drawMesh } from "@/lib/draw-facemesh";
+import { useStore } from "@/lib/user-store";
 
 const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
-  const store = useDisplayStore();
-  const color = store.userColor;
-  const [error, setError] = useState<string | null>(null);
+  const color = useStore().userColor;
 
   useEffect(() => {
     const loadModel = async () => {
       try {
         const loadedModel = await facemesh.load();
         setModel(loadedModel);
-      } catch (error) {
-        // console.error("Error loading FaceMesh model", error);
-      }
+      } catch (error) {}
     };
-
     loadModel();
 
     const getCameraStream = async () => {
@@ -43,14 +38,8 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
             }
           };
         }
-      } catch (err) {
-        // console.error("Error accessing camera: ", err);
-        // setError(
-        //   "Failed to access camera. Please ensure the camera is not being used by another application and that the browser has permission to access it."
-        // );
-      }
+      } catch (err) {}
     };
-
     getCameraStream();
 
     const handleResize = () => {
@@ -63,7 +52,6 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
         canvasRef.current.style.height = `${videoHeight}px`;
       }
     };
-
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -110,7 +98,6 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
 
   return (
     <div className="relative flex justify-center items-center">
-      {error && <div className="absolute text-red-500">{error}</div>}
       <video
         ref={videoRef}
         className="max-w-full max-h-full m-1 rounded-lg"

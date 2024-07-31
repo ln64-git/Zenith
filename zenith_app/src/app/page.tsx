@@ -2,28 +2,27 @@
 import React, { useEffect, useState } from "react";
 import Display from "@/components/display/display";
 import KeyboardShortcuts from "@/utils/keyboard-shortcuts";
-import AnimatedBackground from "@/components/ui/animate-background";
-import { colors } from "@/utils/colorUtils";
-import { useDisplayStore } from "@/utils/display-store";
-import { addUserDisplay } from "@/utils/user-display";
+import { addDisplay } from "@/components/display/add-display";
+import { colors } from "@/utils/color-utils";
+import { useStore } from "@/lib/user-store";
 
 export default function Home() {
   const [color, setColor] = useState<string | null>(null);
   const [cameraAccessed, setCameraAccessed] = useState<boolean>(false);
-  const store = useDisplayStore();
+  const store = useStore();
 
   useEffect(() => {
     if (!color) {
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      setColor(randomColor);
       store.setUserColor(randomColor);
+      setColor(randomColor);
     }
   }, [color, store]);
 
   useEffect(() => {
-    const addDisplay = async () => {
+    const addUserDisplay = async () => {
       if (!cameraAccessed) {
-        const result = await addUserDisplay(store.addDisplay);
+        const result = await addDisplay(store.addDisplay);
         if (result) {
           setCameraAccessed(true);
         } else {
@@ -31,12 +30,8 @@ export default function Home() {
         }
       }
     };
-    addDisplay();
+    addUserDisplay();
   }, [store, cameraAccessed]);
-
-  if (!color) {
-    return null; // or a loading indicator
-  }
 
   return (
     <div className="relative h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] flex justify-center items-center overflow-hidden">

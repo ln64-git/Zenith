@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { generateRelativeColors } from "@/utils/colorUtils"; // Adjust the path as necessary
+import { generateRelativeColors } from "@/utils/color-utils";
 
 interface AnimatedGrayDivProps {
   initialColor: string;
