@@ -2,26 +2,26 @@
 "use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { useDisplayStore } from "@/utils/display-store";
 import { generateRelativeColors } from "@/utils/colorUtils";
 
 interface AnimatedBackgroundProps {
   className?: string;
   children?: React.ReactNode;
+  color: string;
 }
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   className,
   children,
+  color,
 }) => {
-  const store = useDisplayStore();
+  const colors = generateRelativeColors(color);
   const controls = useAnimation();
-  const colors = generateRelativeColors(store.userColor);
 
   useEffect(() => {
     controls.start({
       backgroundColor: colors,
-      boxShadow: colors.map((color) => `0 1px 15px 0 ${color}`), // Reduced intensity
+      boxShadow: colors.map((color) => `0 1px 15px 0 ${color}`),
       transition: {
         repeat: Infinity,
         repeatType: "mirror",
@@ -32,24 +32,18 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
 
   return (
     <motion.div
-      className=" rounded-lg relative"
+      className={`rounded-lg relative ${className}`}
       animate={controls}
       initial={{
-        backgroundColor: store.userColor,
-        boxShadow: `0 1px 32px 0 ${store.userColor}`,
+        backgroundColor: color,
+        boxShadow: `0 1px 32px 0 ${color}`,
       }}
       style={{
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
       }}
     >
-      <motion.div
-        animate={controls}
-        className={className}
-        initial={{ backgroundColor: store.userColor }}
-      >
-        {children}
-      </motion.div>
+      {children}
     </motion.div>
   );
 };
