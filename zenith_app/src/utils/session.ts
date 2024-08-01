@@ -2,6 +2,25 @@ import { useStore } from "@/lib/user-store";
 
 let interval: NodeJS.Timeout | null = null;
 
+export const pauseSession = () => {
+  if (interval !== null) {
+    clearInterval(interval);
+    interval = null;
+  }
+};
+
+export const resumeSession = () => {
+  if (interval !== null) {
+    clearInterval(interval);
+  }
+
+  interval = setInterval(() => {
+    const currentStore = useStore.getState();
+    const currentCount = currentStore.session ? currentStore.session.count : 0;
+    currentStore.setSessionCount(currentCount + 1);
+  }, 1000);
+};
+
 export const startSession = () => {
   const store = useStore.getState();
 

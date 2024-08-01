@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { UserDisplay } from "@/types/types";
+import { pauseSession, resumeSession } from "@/utils/session";
 
 let interval: NodeJS.Timeout | null = null;
 
@@ -58,5 +59,3 @@ export const useStore = create<UserStore>()(
     },
   }))
 );
-
-import { pauseSession, resumeSession } from "@/utils/session";

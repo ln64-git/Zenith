@@ -10,6 +10,8 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
   const color = useStore().userColor;
+  const previousNosePosition = useRef<[number, number] | null>(null); // To store the previous nose position
+  const movementCount = useRef(0); // To store the movement count
 
   useEffect(() => {
     const loadModel = async () => {
@@ -85,13 +87,29 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
           const scaledMesh = predictions[0].scaledMesh;
           if (Array.isArray(scaledMesh)) {
             const nose = scaledMesh[168]; // The 168th point is usually the tip of the nose
-            onMovement(nose[0]); // Call the onMovement callback with the nose x position
+            const [noseX, noseY] = nose;
+
+            if (previousNosePosition.current) {
+              const [prevNoseX, prevNoseY] = previousNosePosition.current;
+              const distance = Math.sqrt(
+                Math.pow(noseX - prevNoseX, 2) + Math.pow(noseY - prevNoseY, 2)
+              );
+
+              // Set a threshold for significant movement
+              const movementThreshold = 5; // Adjust this value as needed
+              if (distance > movementThreshold) {
+                movementCount.current += 1;
+                onMovement(movementCount.current); // Call the onMovement callback with the updated count
+              }
+            }
+
+            previousNosePosition.current = [noseX, noseY];
           }
         }
       }
     };
 
-    const interval = setInterval(detectFace, 1); // Detect every 100ms
+    const interval = setInterval(detectFace, 100); // Detect every 100ms
 
     return () => clearInterval(interval);
   }, [model, onMovement]);
