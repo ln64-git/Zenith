@@ -7,11 +7,11 @@ import Camera from "../camera/camera";
 export default function Display() {
   const [localVideos, setLocalVideos] = useState<UserDisplay[]>([]);
   const [movement, setMovement] = useState<number>(0);
-  const displayStore = useStore();
+  const { userDisplayArray, session } = useStore();
 
   useEffect(() => {
-    setLocalVideos(displayStore.userDisplayArray);
-  }, [displayStore.userDisplayArray]);
+    setLocalVideos(userDisplayArray);
+  }, [userDisplayArray]);
 
   const handleMovement = (newMovement: number) => {
     setMovement(newMovement);
@@ -22,7 +22,9 @@ export default function Display() {
       {localVideos.length > 0 && (
         <div>
           {movement !== 0 && (
-            <div className="absolute p-2 px-4 z-20 text-black">{movement}</div>
+            <div className="absolute p-2 px-4 z-20 text-black">
+              {session?.count}
+            </div>
           )}
           <div className="h-full flex justify-center items-center">
             <Camera onMovement={handleMovement} />
@@ -32,4 +34,3 @@ export default function Display() {
     </>
   );
 }
-

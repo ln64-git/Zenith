@@ -15,7 +15,6 @@ export const addDisplay = async (
     addDisplay(userDisplay);
     return true;
   } else {
-    console.log("No camera detected");
     return false;
   }
 };
