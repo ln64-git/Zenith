@@ -1,9 +1,6 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import { UserDisplay } from "@/types/types";
-import { pauseSession, resumeSession } from "@/utils/session";
-
-let interval: NodeJS.Timeout | null = null;
 
 export type Session = {
   count: number;
@@ -17,12 +14,11 @@ export type UserStore = {
   addDisplay: (video: UserDisplay) => void;
   setUserDisplayArray: (displayArray: Array<UserDisplay>) => void;
   setSessionCount: (count: number) => void;
-  holdSessionCount: () => void;
   clearSession: () => void;
 };
 
 export const useStore = create<UserStore>()(
-  subscribeWithSelector((set, get) => ({
+  subscribeWithSelector((set) => ({
     userColor: "",
     userDisplayArray: [],
     session: null,
@@ -44,17 +40,7 @@ export const useStore = create<UserStore>()(
         session: { ...state.session, count },
       }));
     },
-    holdSessionCount: () => {
-      pauseSession();
-      setTimeout(() => {
-        resumeSession();
-      }, 2000);
-    },
     clearSession: () => {
-      if (interval !== null) {
-        clearInterval(interval);
-        interval = null;
-      }
       set({ session: null });
     },
   }))

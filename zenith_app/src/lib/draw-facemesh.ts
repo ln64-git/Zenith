@@ -4,7 +4,7 @@ export const drawMesh = (
   ctx: CanvasRenderingContext2D,
   keypoints: Coords3D,
   color: string,
-  alpha: number = 1 // Default alpha value for transparency
+  alpha: number = 0
 ) => {
   const rgbaColor = hexToRgba(color, alpha);
 

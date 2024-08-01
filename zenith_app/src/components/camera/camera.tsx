@@ -11,7 +11,8 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
   const [model, setModel] = useState<facemesh.FaceMesh | null>(null);
   const color = useStore().userColor;
   const previousNosePosition = useRef<[number, number] | null>(null); // To store the previous nose position
-  const movementCount = useRef(0); // To store the movement count
+  const movementCount = useRef(0);
+  const { session, setSessionCount } = useStore();
 
   useEffect(() => {
     const loadModel = async () => {
@@ -95,11 +96,13 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
                 Math.pow(noseX - prevNoseX, 2) + Math.pow(noseY - prevNoseY, 2)
               );
 
-              // Set a threshold for significant movement
-              const movementThreshold = 5; // Adjust this value as needed
+              const movementThreshold = 5;
               if (distance > movementThreshold) {
                 movementCount.current += 1;
-                onMovement(movementCount.current); // Call the onMovement callback with the updated count
+                onMovement(movementCount.current);
+                const count = session?.count || 0;
+                const newCount = Math.max(0, count - 1); // Ensure count does not go below 0
+                setSessionCount(newCount);
               }
             }
 
@@ -112,7 +115,7 @@ const Camera = ({ onMovement }: { onMovement: (movement: number) => void }) => {
     const interval = setInterval(detectFace, 100); // Detect every 100ms
 
     return () => clearInterval(interval);
-  }, [model, onMovement]);
+  }, [model, onMovement, session, setSessionCount]);
 
   return (
     <div className="relative flex justify-center items-center">
