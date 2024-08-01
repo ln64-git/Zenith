@@ -22,9 +22,14 @@ export default function Display() {
       {localVideos.length > 0 && (
         <div>
           {movement !== 0 && (
-            <div className="absolute p-2 px-4 z-20 text-black">
-              {session?.count}
-            </div>
+            <>
+              <div className="absolute p-2 px-4 z-20 text-black flex flex-col">
+                {movement}
+              </div>
+              <div className="absolute pt-6 p-2 px-4 z-20 text-black flex flex-col">
+                {session?.count}
+              </div>
+            </>
           )}
           <div className="h-full flex justify-center items-center">
             <Camera onMovement={handleMovement} />
